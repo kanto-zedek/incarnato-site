@@ -17,7 +17,7 @@
   document.querySelectorAll('.copie').forEach(function(b){
     b.addEventListener('click',function(){
       var mail=b.getAttribute('data-mail');
-      var fin=function(){b.classList.add('fait');setTimeout(function(){b.classList.remove('fait')},1500)};
+      var fin=function(){b.classList.add('fait');clearTimeout(b._t);b._t=setTimeout(function(){b.classList.remove('fait')},2500)};
       if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(mail).then(fin,fin);
       else{var t=document.createElement('textarea');t.value=mail;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}t.remove();fin()}
     });
