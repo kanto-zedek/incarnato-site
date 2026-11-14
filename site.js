@@ -22,6 +22,20 @@
       else{var t=document.createElement('textarea');t.value=mail;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}t.remove();fin()}
     });
   });
+  // Contact : copie l'email au lieu d'ouvrir le client mail
+  document.querySelectorAll('a.contact').forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      var mail=a.getAttribute('data-mail');
+      var fin=function(){
+        if(!a._txt)a._txt=a.textContent;
+        a.textContent='Copied';a.classList.add('fait');
+        clearTimeout(a._t);a._t=setTimeout(function(){a.textContent=a._txt;a.classList.remove('fait')},2500);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(mail).then(fin,fin);
+      else{var t=document.createElement('textarea');t.value=mail;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(err){}t.remove();fin()}
+    });
+  });
   // Videos : lecture seulement quand visibles
   var vids=document.querySelectorAll('video[data-auto]');
   if(vids.length){
